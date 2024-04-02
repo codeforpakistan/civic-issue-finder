@@ -1,0 +1,2 @@
+# Civic Issue Finder
+The easiest way to get started with civic hacking. Find issues and projects to work on in your community. Crowdsource your local government, volunteers and civic society organizations.
