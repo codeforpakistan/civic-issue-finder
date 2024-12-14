@@ -1,101 +1,144 @@
-import Image from "next/image";
+"use client"
+import { IssueCard } from "@/components/IssueCard"
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
+import { useEffect, useState } from "react"
+import { useSearchParams, useRouter } from 'next/navigation'
+import type { GitHubIssue } from "@/lib/github"
+import { LanguageFilter } from "@/components/LanguageFilter"
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
+
+interface IssuesResponse {
+  items: GitHubIssue[];
+  total_count: number;
+}
+
+function IssueCardSkeleton() {
+  return (
+    <Card className="flex flex-col h-full">
+      <CardHeader>
+        <Skeleton className="h-6 w-3/4" />
+        <Skeleton className="h-4 w-1/2 mt-2" />
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-5/6" />
+          <Skeleton className="h-4 w-4/6" />
+        </div>
+        <div className="flex gap-2">
+          <Skeleton className="h-5 w-16" />
+          <Skeleton className="h-5 w-20" />
+        </div>
+      </CardContent>
+      <CardFooter>
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-6 w-6 rounded-full" />
+          <Skeleton className="h-4 w-24" />
+        </div>
+      </CardFooter>
+    </Card>
+  )
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [issues, setIssues] = useState<IssuesResponse>({ items: [], total_count: 0 });
+  const [isLoading, setIsLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const currentLanguage = searchParams.get('language') || 'all';
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const fetchIssues = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `/api/issues?page=${currentPage}&language=${currentLanguage}`
+        );
+        const data = await response.json();
+        setIssues(data);
+      } catch (error) {
+        console.error('Failed to fetch issues:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchIssues();
+  }, [currentPage, currentLanguage]);
+
+  const handlePageChange = (newPage: number) => {
+    router.push(`?page=${newPage}&language=${currentLanguage}`);
+  };
+
+  const handleLanguageChange = (language: string) => {
+    router.push(`?page=1&language=${language}`);
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="space-y-8">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <h2 className="text-2xl font-semibold">
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Loading issues...
+              </span>
+            ) : (
+              `${issues.total_count} Open Issues`
+            )}
+          </h2>
+          <LanguageFilter 
+            value={currentLanguage} 
+            onChange={handleLanguageChange}
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="border rounded-lg p-6 shadow-sm">
+                <IssueCardSkeleton />
+              </div>
+            ))}
+          </div>
+        ) : issues.items.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-lg text-muted-foreground">No issues found</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {issues.items.map((issue) => (
+              <IssueCard
+                key={issue.id}
+                issue={issue}
+              />
+            ))}
+          </div>
+        )}
+
+        <div className="flex justify-center gap-2">
+          <Button
+            variant="outline"
+            disabled={currentPage === 1 || isLoading}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            <ChevronLeft className="h-4 w-4 mr-2" />
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            disabled={isLoading || issues.items.length === 0}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+            <ChevronRight className="h-4 w-4 ml-2" />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

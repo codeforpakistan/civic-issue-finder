@@ -2,26 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 224 71% 4%;
+    
+    /* CfA Blue - primary color inspired by Code for America's brand */
+    --primary: 201 96% 32%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Civic Orange - warm, engaging accent color */
+    --accent: 14 91% 54%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Brigade Green - community action color */
+    --secondary: 145 63% 42%;
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Clean backgrounds */
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
+    
+    /* Muted government grays */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    
+    /* System indicators */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    
+    /* Subtle borders */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 201 96% 32%;
+
+    /* Civic tech data visualization colors */
+    --chart-1: 201 96% 32%;  /* CfA Blue */
+    --chart-2: 145 63% 42%;  /* Brigade Green */
+    --chart-3: 14 91% 54%;   /* Civic Orange */
+    --chart-4: 271 81% 56%;  /* Democracy Purple */
+    --chart-5: 190 95% 39%;  /* Digital Blue */
+    
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 210 20% 98%;
+    
+    /* Dark mode CfA Blue */
+    --primary: 201 96% 42%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Dark mode Civic Orange */
+    --accent: 14 91% 54%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Dark mode Brigade Green */
+    --secondary: 145 63% 48%;
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Dark surfaces */
+    --card: 224 71% 4%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 210 20% 98%;
+    
+    /* Dark mode muted tones */
+    --muted: 215 27% 11%;
+    --muted-foreground: 217 19% 73%;
+    
+    /* Dark mode system colors */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    
+    /* Dark mode borders */
+    --border: 215 27% 11%;
+    --input: 215 27% 11%;
+    --ring: 201 96% 42%;
+
+    /* Dark mode chart colors */
+    --chart-1: 201 96% 42%;  /* Brighter CfA Blue */
+    --chart-2: 145 63% 48%;  /* Brighter Brigade Green */
+    --chart-3: 14 91% 54%;   /* Civic Orange */
+    --chart-4: 271 81% 56%;  /* Democracy Purple */
+    --chart-5: 190 95% 45%;  /* Digital Blue */
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
