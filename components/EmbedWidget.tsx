@@ -9,11 +9,10 @@ import { Textarea } from "@/components/ui/textarea"
 
 export function EmbedWidget() {
   const [copied, setCopied] = useState(false)
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [height, setHeight] = useState("600")
   
   const embedCode = `<iframe 
-    src="${process.env.NEXT_PUBLIC_APP_URL}/embed?theme=${theme}" 
+    src="${process.env.NEXT_PUBLIC_APP_URL}/embed" 
     width="100%" 
     height="${height}px" 
     frameborder="0"
@@ -30,21 +29,6 @@ export function EmbedWidget() {
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <label className="text-sm font-medium">Theme</label>
-          <Select 
-            value={theme} 
-            onValueChange={(value: 'light' | 'dark') => setTheme(value)}
-          >
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-2">
           <label className="text-sm font-medium">Height (px)</label>
           <Input 
             type="number" 
@@ -60,7 +44,7 @@ export function EmbedWidget() {
           <Textarea
             value={embedCode}
             readOnly
-            className="font-mono text-sm min-h-[100px] resize-none"
+            className="font-mono text-sm min-h-[155px] resize-none"
           />
           <Button
             size="sm"
@@ -80,7 +64,7 @@ export function EmbedWidget() {
           className="rounded border bg-background" 
           style={{ height: `${height}px` }}
         >
-          <IssuesList minimal={true} theme={theme} />
+          <IssuesList minimal={true} />
         </div>
       </div>
     </div>
