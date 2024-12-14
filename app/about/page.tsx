@@ -76,7 +76,7 @@ export default function AboutPage() {
               </p>
               <Button variant="outline" asChild>
                 <a 
-                  href="https://github.com/your-repo" 
+                  href="https://github.com/codeforpakistan/civic-issue-finder" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center"
