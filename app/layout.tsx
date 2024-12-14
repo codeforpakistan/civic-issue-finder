@@ -3,19 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/mode-toggle"
-import { Heart } from "lucide-react"
+import { Heart, Github } from "lucide-react"
 import Link from "next/link"
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Civic Issue Finder",
@@ -30,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full flex flex-col bg-background text-foreground`}
+        className="antialiased min-h-full flex flex-col bg-background text-foreground"
       >
         <ThemeProvider
           attribute="class"
@@ -55,12 +44,12 @@ export default function RootLayout({
               <div className="flex items-center gap-4">
                 <ModeToggle />
                 <a 
-                  href="https://github.com/your-repo" 
+                  href="https://github.com/codeforpakistan/civic-issue-finder" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  GitHub
+                  <Github className="h-4 w-4" />
                 </a>
               </div>
             </div>
