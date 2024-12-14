@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Github, Heart } from "lucide-react"
+import { Github } from "lucide-react"
 import Link from "next/link"
 
 export default function AboutPage() {
@@ -18,7 +18,7 @@ export default function AboutPage() {
           <p className="leading-7">
             The Civic Issue Finder helps connect developers, designers, and civic innovators 
             with open source projects that make a difference in communities. Inspired by 
-            Code for America's original civic issue finder, this tool aggregates GitHub issues 
+            Code for America&apos;s original civic issue finder, this tool aggregates GitHub issues 
             from civic tech projects to help you find ways to contribute.
           </p>
 
@@ -46,7 +46,7 @@ export default function AboutPage() {
             </p>
             <ol className="list-decimal pl-6 space-y-2">
               <li>Read the issue description and project guidelines</li>
-              <li>Join the project's community (Discord, Slack, or discussions)</li>
+              <li>Join the project&apos;s community (Discord, Slack, or discussions)</li>
               <li>Comment on the issue to express your interest</li>
               <li>Fork the repository and start contributing!</li>
             </ol>
@@ -91,7 +91,7 @@ export default function AboutPage() {
 
         <div className="text-center text-muted-foreground">
           <p className="flex items-center justify-center gap-2">
-            Inspired from(now deprecated) Code for America's original Civic Issue Finder
+            Inspired from (now deprecated) Code for America&apos;s original Civic Issue Finder
           </p>
         </div>
       </div>

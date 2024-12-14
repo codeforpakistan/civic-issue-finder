@@ -1,5 +1,5 @@
 "use client"
-import { ProjectCard } from "@/components/ProblemCard"
+import { ProjectCard } from "@/components/ProjectCard"
 import { Skeleton } from "@/components/ui/skeleton"
 import { AlertCircle, Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"

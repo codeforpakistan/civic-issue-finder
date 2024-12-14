@@ -11,6 +11,7 @@ export async function GET(request: Request) {
     const data = await fetchGitHubIssues(page, per_page, language);
     return NextResponse.json(data);
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { error: 'Failed to fetch issues' }, 
       { status: 500 }

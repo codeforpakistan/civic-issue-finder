@@ -1,19 +1,11 @@
 "use client"
+import { Suspense } from 'react'
 import { IssueCard } from "@/components/IssueCard"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
-import { useEffect, useState } from "react"
-import { useSearchParams, useRouter } from 'next/navigation'
-import type { GitHubIssue } from "@/lib/github"
-import { LanguageFilter } from "@/components/LanguageFilter"
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 
-interface IssuesResponse {
-  items: GitHubIssue[];
-  total_count: number;
-}
-
+// Move this to a separate client component
 function IssueCardSkeleton() {
   return (
     <Card className="flex flex-col h-full">
@@ -42,7 +34,19 @@ function IssueCardSkeleton() {
   )
 }
 
-export default function Home() {
+// Client component with all the hooks
+import { useSearchParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from "react"
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
+import type { GitHubIssue } from "@/lib/github"
+import { LanguageFilter } from "@/components/LanguageFilter"
+
+interface IssuesResponse {
+  items: GitHubIssue[];
+  total_count: number;
+}
+
+function HomeContent() {
   const [issues, setIssues] = useState<IssuesResponse>({ items: [], total_count: 0 });
   const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
@@ -141,4 +145,13 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+// Server component
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
+  )
 }

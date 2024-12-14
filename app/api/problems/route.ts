@@ -7,31 +7,7 @@ const base = new Airtable({
   endpointUrl: 'https://api.airtable.com',
 }).base(process.env.AIRTABLE_BASE_ID!);
 
-interface AirtableRecord {
-  id: string;
-  fields: {
-    Department?: string;
-    'Problem Statement'?: string;
-    Status?: string;
-    Year?: number;
-    'Github URL'?: string;
-    'Deployment URL'?: string;
-    Type?: string;
-    Published?: boolean;
-  };
-}
 
-interface Project {
-  id: string;
-  department: string;
-  problemStatement: string;
-  status: string;
-  year: number;
-  githubUrl?: string;
-  deploymentUrl?: string;
-  type: string;
-  isPublished: boolean;
-}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

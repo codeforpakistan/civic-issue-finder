@@ -7,6 +7,7 @@ const ratelimit = new LRUCache({
 })
 
 export async function rateLimit(request: Request) {
+  console.log(request.headers)
   const ip = headers().get('x-forwarded-for') ?? 'anonymous'
   const tokenCount = ratelimit.get(ip) as number || 0
   
