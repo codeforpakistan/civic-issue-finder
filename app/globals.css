@@ -5,90 +5,90 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 224 71% 4%;
+    --foreground: 240 10% 3.9%;
     
     /* CfA Blue - primary color inspired by Code for America's brand */
-    --primary: 201 96% 32%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
     
     /* Civic Orange - warm, engaging accent color */
-    --accent: 14 91% 54%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
     
     /* Brigade Green - community action color */
-    --secondary: 145 63% 42%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
     
     /* Clean backgrounds */
     --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
+    --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
+    --popover-foreground: 240 10% 3.9%;
     
     /* Muted government grays */
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
     
     /* System indicators */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
     
     /* Subtle borders */
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 201 96% 32%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
 
     /* Civic tech data visualization colors */
-    --chart-1: 201 96% 32%;  /* CfA Blue */
-    --chart-2: 145 63% 42%;  /* Brigade Green */
-    --chart-3: 14 91% 54%;   /* Civic Orange */
-    --chart-4: 271 81% 56%;  /* Democracy Purple */
-    --chart-5: 190 95% 39%;  /* Digital Blue */
+    --chart-1: 12 76% 61%;  /* CfA Blue */
+    --chart-2: 173 58% 39%;  /* Brigade Green */
+    --chart-3: 197 37% 24%;   /* Civic Orange */
+    --chart-4: 43 74% 66%;  /* Democracy Purple */
+    --chart-5: 27 87% 67%;  /* Digital Blue */
     
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 210 20% 98%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
     
     /* Dark mode CfA Blue */
-    --primary: 201 96% 42%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
     
     /* Dark mode Civic Orange */
-    --accent: 14 91% 54%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
     
     /* Dark mode Brigade Green */
-    --secondary: 145 63% 48%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
     
     /* Dark surfaces */
-    --card: 224 71% 4%;
-    --card-foreground: 210 20% 98%;
-    --popover: 224 71% 4%;
-    --popover-foreground: 210 20% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
     
     /* Dark mode muted tones */
-    --muted: 215 27% 11%;
-    --muted-foreground: 217 19% 73%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
     
     /* Dark mode system colors */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
     
     /* Dark mode borders */
-    --border: 215 27% 11%;
-    --input: 215 27% 11%;
-    --ring: 201 96% 42%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
 
     /* Dark mode chart colors */
-    --chart-1: 201 96% 42%;  /* Brighter CfA Blue */
-    --chart-2: 145 63% 48%;  /* Brighter Brigade Green */
-    --chart-3: 14 91% 54%;   /* Civic Orange */
-    --chart-4: 271 81% 56%;  /* Democracy Purple */
-    --chart-5: 190 95% 45%;  /* Digital Blue */
+    --chart-1: 220 70% 50%;  /* Brighter CfA Blue */
+    --chart-2: 160 60% 45%;  /* Brighter Brigade Green */
+    --chart-3: 30 80% 55%;   /* Civic Orange */
+    --chart-4: 280 65% 60%;  /* Democracy Purple */
+    --chart-5: 340 75% 55%;  /* Digital Blue */
   }
 }
 
