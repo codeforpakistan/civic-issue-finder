@@ -2,12 +2,10 @@ import { NextResponse } from 'next/server';
 import Airtable from 'airtable';
 
 // Configure Airtable with Personal Access Token
-Airtable.configure({
+const base = new Airtable({
   apiKey: process.env.AIRTABLE_PAT,
   endpointUrl: 'https://api.airtable.com',
-});
-
-const base = Airtable.base(process.env.AIRTABLE_BASE_ID!);
+}).base(process.env.AIRTABLE_BASE_ID!);
 
 interface AirtableRecord {
   id: string;
@@ -39,37 +37,55 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = Number(searchParams.get('page')) || 1;
   const per_page = Number(searchParams.get('per_page')) || 12;
+  const search = searchParams.get('search') || '';
 
   try {
-    const records = await base('CFP Projects')
-      .select({
-        maxRecords: per_page,
-        pageSize: per_page,
-        view: "Grid view",
-        filterByFormula: '{Published} = 1' // Only get published projects
-      })
-      .firstPage() as unknown as AirtableRecord[];
+    // Get all records for total count
+    const allRecords = await base('tblYQwPul2tR1eoNc').select({
+      view: "viwj79HJQOAmFJJAk",
+      filterByFormula: search 
+        ? `AND(SEARCH("${search.toLowerCase()}", LOWER({Problem Statement})), {Published})` 
+        : '{Published}',
+    }).all();
 
-    const projects = records.map(record => ({
+    const total_count = allRecords.length;
+    
+    // Get the slice of records for current page
+    const startIndex = (page - 1) * per_page;
+    const endIndex = startIndex + per_page;
+    const pageRecords = allRecords.slice(startIndex, endIndex);
+
+    const projects = pageRecords.map(record => ({
       id: record.id,
-      department: record.fields['Department'] || '',
-      problemStatement: record.fields['Problem Statement'] || '',
-      status: record.fields['Status'] || '',
-      year: record.fields['Year'] || new Date().getFullYear(),
-      githubUrl: record.fields['Github URL'],
-      deploymentUrl: record.fields['Deployment URL'],
-      type: record.fields['Type'] || '',
-      isPublished: record.fields['Published'] || false
+      department: record.get('Department') || '',
+      problemStatement: record.get('Problem Statement') || '',
+      status: record.get('Status') || '',
+      year: record.get('Year') || new Date().getFullYear(),
+      githubUrl: record.get('Github URL'),
+      deploymentUrl: record.get('Deployment URL'),
+      type: record.get('Type') || '',
+      isPublished: record.get('Published') || false
     }));
 
     return NextResponse.json({
       items: projects,
-      total_count: projects.length,
+      total_count: total_count,
+      page: page,
+      per_page: per_page,
+      total_pages: Math.ceil(total_count / per_page)
     });
-  } catch (error) {
-    console.error('Airtable Error:', error);
+  } catch (error: any) {
+    console.error('Airtable Error Details:', {
+      error: error.error,
+      message: error.message,
+      statusCode: error.statusCode,
+      config: {
+        baseId: process.env.AIRTABLE_BASE_ID,
+        hasToken: !!process.env.AIRTABLE_PAT,
+      }
+    });
     return NextResponse.json(
-      { error: 'Failed to fetch projects' }, 
+      { error: `Failed to fetch projects: ${error.message}` }, 
       { status: 500 }
     );
   }
