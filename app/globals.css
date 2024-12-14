@@ -4,91 +4,93 @@
 
 @layer base {
   :root {
+    /* Base colors */
     --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    
-    /* CfA Blue - primary color inspired by Code for America's brand */
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    
-    /* Civic Orange - warm, engaging accent color */
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    
-    /* Brigade Green - community action color */
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    
-    /* Clean backgrounds */
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    
-    /* Muted government grays */
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    
-    /* System indicators */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    
-    /* Subtle borders */
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    --foreground: 222 47% 11%;
 
-    /* Civic tech data visualization colors */
-    --chart-1: 12 76% 61%;  /* CfA Blue */
-    --chart-2: 173 58% 39%;  /* Brigade Green */
-    --chart-3: 197 37% 24%;   /* Civic Orange */
-    --chart-4: 43 74% 66%;  /* Democracy Purple */
-    --chart-5: 27 87% 67%;  /* Digital Blue */
-    
+    /* Government Blue - Primary */
+    --primary: 215 91% 32%;  /* Strong, trustworthy blue */
+    --primary-foreground: 210 40% 98%;
+
+    /* Community Green - Secondary */
+    --secondary: 145 63% 42%;  /* Vibrant, civic engagement green */
+    --secondary-foreground: 210 40% 98%;
+
+    /* Action Red - Accent */
+    --accent: 3 89% 63%;  /* Energetic, call-to-action red */
+    --accent-foreground: 0 0% 100%;
+
+    /* Clean surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Professional grays */
+    --muted: 210 25% 96%;
+    --muted-foreground: 215 25% 27%;
+
+    /* System indicators */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Subtle borders */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 201 96% 32%;
+
+    /* Data visualization palette */
+    --chart-1: 201 96% 32%;  /* Government Blue */
+    --chart-2: 145 63% 42%;  /* Community Green */
+    --chart-3: 3 89% 63%;    /* Action Red */
+    --chart-4: 250 95% 64%;  /* Innovation Purple */
+    --chart-5: 190 95% 39%;  /* Digital Blue */
+
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    
-    /* Dark mode CfA Blue */
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    
-    /* Dark mode Civic Orange */
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    
-    /* Dark mode Brigade Green */
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    
+    /* Dark mode base */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    /* Dark Government Blue */
+    --primary: 201 96% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Dark Community Green */
+    --secondary: 145 63% 48%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Dark Action Red */
+    --accent: 3 89% 68%;
+    --accent-foreground: 0 0% 100%;
+
     /* Dark surfaces */
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    
-    /* Dark mode muted tones */
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    
-    /* Dark mode system colors */
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    
-    /* Dark mode borders */
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Dark mode grays */
+    --muted: 215 27% 11%;
+    --muted-foreground: 217 19% 73%;
+
+    /* Dark mode indicators */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Dark borders */
+    --border: 215 27% 11%;
+    --input: 215 27% 11%;
+    --ring: 201 96% 42%;
 
     /* Dark mode chart colors */
-    --chart-1: 220 70% 50%;  /* Brighter CfA Blue */
-    --chart-2: 160 60% 45%;  /* Brighter Brigade Green */
-    --chart-3: 30 80% 55%;   /* Civic Orange */
-    --chart-4: 280 65% 60%;  /* Democracy Purple */
-    --chart-5: 340 75% 55%;  /* Digital Blue */
+    --chart-1: 201 96% 42%;  /* Brighter Government Blue */
+    --chart-2: 145 63% 48%;  /* Brighter Community Green */
+    --chart-3: 3 89% 68%;    /* Brighter Action Red */
+    --chart-4: 250 95% 69%;  /* Brighter Innovation Purple */
+    --chart-5: 190 95% 45%;  /* Brighter Digital Blue */
   }
 }
 
