@@ -92,7 +92,7 @@ function HomeContent() {
                 Loading issues...
               </span>
             ) : (
-              `${issues.total_count} Open Issues`
+              `${issues.total_count} Open Issues for you to work on`
             )}
           </h2>
           <LanguageFilter 
