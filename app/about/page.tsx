@@ -46,7 +46,7 @@ export default function AboutPage() {
             </p>
             <ol className="list-decimal pl-6 space-y-2">
               <li>Read the issue description and project guidelines</li>
-              <li>Join the project&apos;s community (Discord, Slack, or discussions)</li>
+              <li>Join our <a href  ="https://codeforpakistan.org/volunteer/register" target="_blank" rel="noopener noreferrer">volunteer community</a> to get started</li>
               <li>Comment on the issue to express your interest</li>
               <li>Fork the repository and start contributing!</li>
             </ol>
