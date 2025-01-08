@@ -40,7 +40,7 @@ npm install
 
 ```
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-GITHUB_PAT=your_github_pat
+GH_PAT=your_github_pat
 AIRTABLE_PAT=your_airtable_pat
 AIRTABLE_BASE_ID=your_base_id
 ```
