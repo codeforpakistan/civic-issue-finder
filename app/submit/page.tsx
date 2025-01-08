@@ -145,7 +145,7 @@ export default function SubmitProblemPage() {
         <div className="text-sm text-muted-foreground text-center">
           <p>
             Your submission will be reviewed before being published.
-            We'll notify you once it's approved.
+            We&apos;ll notify you once it&apos;s approved.
           </p>
         </div>
       </div>
