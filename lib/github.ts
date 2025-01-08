@@ -2,7 +2,7 @@ import { graphql } from "@octokit/graphql";
 
 const graphqlWithAuth = graphql.defaults({
   headers: {
-    authorization: `bearer ${process.env.GITHUB_PAT}`,
+    authorization: `bearer ${process.env.GH_PAT}`,
   },
 });
 
