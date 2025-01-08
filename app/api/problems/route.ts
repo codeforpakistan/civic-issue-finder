@@ -20,8 +20,8 @@ export async function GET(request: Request) {
     const allRecords = await base('tblYQwPul2tR1eoNc').select({
       view: "viwj79HJQOAmFJJAk",
       filterByFormula: search 
-        ? `AND(SEARCH("${search.toLowerCase()}", LOWER({Problem Statement})), {Published})` 
-        : '{Published}',
+        ? `AND(SEARCH("${search.toLowerCase()}", LOWER({Problem Statement})), {Published} = TRUE)` 
+        : '{Published} = TRUE',
     }).all();
 
     const total_count = allRecords.length;
@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 
     const projects = pageRecords.map(record => ({
       id: record.id,
-      department: record.get('Department') || '',
+      department: record.get('Deparment') || '',
       problemStatement: record.get('Problem Statement') || '',
       status: record.get('Status') || '',
       year: record.get('Year') || new Date().getFullYear(),
