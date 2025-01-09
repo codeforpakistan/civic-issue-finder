@@ -1,3 +1,5 @@
+[![CI](https://github.com/codeforpakistan/civic-issue-finder/actions/workflows/ci.yml/badge.svg)](https://github.com/codeforpakistan/civic-issue-finder/actions/workflows/ci.yml)
+
 # Civic Issue Finder
 
 A modern take on Code for America's original Civic Issue Finder. This tool helps connect developers with meaningful civic tech opportunities by aggregating GitHub issues labeled as `civic-tech-issue`.
