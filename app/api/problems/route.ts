@@ -20,8 +20,8 @@ export async function GET(request: Request) {
     const allRecords = await base('tblYQwPul2tR1eoNc').select({
       view: "viwj79HJQOAmFJJAk",
       filterByFormula: search 
-        ? `AND(SEARCH("${search.toLowerCase()}", LOWER({Problem Statement})), {Published} = TRUE)` 
-        : '{Published} = TRUE',
+        ? `AND(SEARCH("${search.toLowerCase()}", LOWER({Problem Statement})), {Published} = 1)` 
+        : '{Published} = 1',
     }).all();
 
     const total_count = allRecords.length;
