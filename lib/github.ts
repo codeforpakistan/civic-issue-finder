@@ -1,9 +1,15 @@
 import { graphql } from "@octokit/graphql";
+import { LRUCache } from 'lru-cache';
 
 const graphqlWithAuth = graphql.defaults({
   headers: {
     authorization: `bearer ${process.env.GH_PAT}`,
   },
+});
+
+const statsCache = new LRUCache({
+  max: 1,
+  ttl: 1000 * 60 * 0.5, // Cache for 30 seconds
 });
 
 export interface GitHubIssue {
@@ -26,6 +32,28 @@ export interface GitHubIssue {
       color: string;
     }[];
   };
+}
+
+export interface GitHubStats {
+  openIssues: number;
+  closedIssues: number;
+  totalRepositories: number;
+  averageTimeToClose: number;
+  topLanguages: Array<{
+    name: string;
+    count: number;
+  }>;
+  recentActivity: Array<{
+    date: string;
+    opened: number;
+    closed: number;
+  }>;
+  contributors: Array<{
+    login: string;
+    avatarUrl: string;
+    issuesOpened: number;
+    issuesClosed: number;
+  }>;
 }
 
 export async function fetchGitHubIssues(
@@ -82,6 +110,121 @@ export async function fetchGitHubIssues(
       total_count: response.search.issueCount,
       pageInfo: response.search.pageInfo,
     };
+  } catch (error) {
+    console.error("GitHub API Error:", error);
+    throw error;
+  }
+}
+
+export async function fetchGitHubStats(): Promise<GitHubStats> {
+  const cached = statsCache.get('stats');
+  if (cached) {
+    return cached as GitHubStats;
+  }
+
+  const query = `
+    query {
+      openIssues: search(query: "is:issue is:open label:\\"civic-tech-issue\\"", type: ISSUE, first: 100) {
+        issueCount
+        nodes {
+          ... on Issue {
+            state
+            author {
+              login
+              avatarUrl
+            }
+            repository {
+              nameWithOwner
+              primaryLanguage { name }
+            }
+            createdAt
+          }
+        }
+      }
+      closedIssues: search(query: "is:issue is:closed label:\\"civic-tech-issue\\"", type: ISSUE, first: 100) {
+        issueCount
+        nodes {
+          ... on Issue {
+            state
+            author {
+              login
+              avatarUrl
+            }
+            closedAt
+            createdAt
+          }
+        }
+      }
+      repositories: search(query: "label:\\"civic-tech-issue\\"", type: REPOSITORY, first: 100) {
+        repositoryCount
+      }
+    }
+  `;
+
+  try {
+    const data: any = await graphqlWithAuth(query);
+    
+    // Process contributors from both open and closed issues
+    const contributorMap = new Map();
+    
+    // Process open issues
+    if (data.openIssues?.nodes) {
+      data.openIssues.nodes.forEach((issue: any) => {
+        if (!issue.author) return;
+        
+        const login = issue.author.login;
+        if (!contributorMap.has(login)) {
+          contributorMap.set(login, {
+            login,
+            avatarUrl: issue.author.avatarUrl,
+            issuesOpened: 0,
+            issuesClosed: 0,
+          });
+        }
+        const contributor = contributorMap.get(login);
+        contributor.issuesOpened++;
+      });
+    }
+
+    // Process closed issues
+    if (data.closedIssues?.nodes) {
+      data.closedIssues.nodes.forEach((issue: any) => {
+        if (!issue.author) return;
+        
+        const login = issue.author.login;
+        if (!contributorMap.has(login)) {
+          contributorMap.set(login, {
+            login,
+            avatarUrl: issue.author.avatarUrl,
+            issuesOpened: 0,
+            issuesClosed: 0,
+          });
+        }
+        const contributor = contributorMap.get(login);
+        contributor.issuesClosed++;
+      });
+    }
+
+    // Convert to array and sort by total issues
+    const contributors = Array.from(contributorMap.values())
+      .sort((a, b) => 
+        (b.issuesOpened + b.issuesClosed) - (a.issuesOpened + a.issuesClosed)
+      )
+      .slice(0, 10); // Top 10 contributors
+
+    const result: GitHubStats = {
+      openIssues: data.openIssues?.issueCount || 0,
+      closedIssues: data.closedIssues?.issueCount || 0,
+      totalRepositories: data.repositories?.repositoryCount || 0,
+      averageTimeToClose: 0,
+      topLanguages: [],
+      recentActivity: [],
+      contributors,
+    };
+
+    console.log("stats", result);
+    statsCache.set('stats', result);
+    return result;
   } catch (error) {
     console.error("GitHub API Error:", error);
     throw error;
