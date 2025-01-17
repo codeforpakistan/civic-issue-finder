@@ -17,6 +17,7 @@ const navigation = [
   { name: 'Problem Statements', href: '/problems' },
   { name: 'Submit Problem', href: '/submit' },
   { name: 'Integration', href: '/docs' },
+  { name: 'Stats', href: '/stats' },
 ]
 
 export default function RootLayout({
