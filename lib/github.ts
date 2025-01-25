@@ -1,15 +1,9 @@
 import { graphql } from "@octokit/graphql";
-import { LRUCache } from 'lru-cache';
 
 const graphqlWithAuth = graphql.defaults({
   headers: {
     authorization: `bearer ${process.env.GH_PAT}`,
   },
-});
-
-const statsCache = new LRUCache({
-  max: 1,
-  ttl: 1000 * 60 * 0.5, // Cache for 30 seconds
 });
 
 export interface GitHubIssue {
@@ -117,14 +111,11 @@ export async function fetchGitHubIssues(
 }
 
 export async function fetchGitHubStats(): Promise<GitHubStats> {
-  const cached = statsCache.get('stats');
-  if (cached) {
-    return cached as GitHubStats;
-  }
-
+  console.log("Fetching fresh stats from GitHub...");
+  
   const query = `
     query {
-      openIssues: search(query: "is:issue is:open label:\\"civic-tech-issue\\"", type: ISSUE, first: 100) {
+      openIssues: search(query: "label:civic-tech-issue is:open is:issue", type: ISSUE, first: 100) {
         issueCount
         nodes {
           ... on Issue {
@@ -141,7 +132,7 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
           }
         }
       }
-      closedIssues: search(query: "is:issue is:closed label:\\"civic-tech-issue\\"", type: ISSUE, first: 100) {
+      closedIssues: search(query: "label:civic-tech-issue is:closed is:issue", type: ISSUE, first: 100) {
         issueCount
         nodes {
           ... on Issue {
@@ -155,7 +146,7 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
           }
         }
       }
-      repositories: search(query: "label:\\"civic-tech-issue\\"", type: REPOSITORY, first: 100) {
+      repositories: search(query: "label:civic-tech-issue", type: REPOSITORY, first: 100) {
         repositoryCount
       }
     }
@@ -222,9 +213,9 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
       contributors,
     };
 
-    console.log("stats", result);
-    statsCache.set('stats', result);
+    console.log("Fresh stats fetched:", result);
     return result;
+    
   } catch (error) {
     console.error("GitHub API Error:", error);
     throw error;
