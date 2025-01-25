@@ -115,7 +115,7 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
   
   const query = `
     query {
-      openIssues: search(query: "label:civic-tech-issue is:open is:issue", type: ISSUE, first: 100) {
+      openIssues: search(query: "label:civic-tech-issue is:open is:issue sort:updated-desc", type: ISSUE, first: 100) {
         issueCount
         nodes {
           ... on Issue {
@@ -132,7 +132,7 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
           }
         }
       }
-      closedIssues: search(query: "label:civic-tech-issue is:closed is:issue", type: ISSUE, first: 100) {
+      closedIssues: search(query: "label:civic-tech-issue is:closed is:issue sort:updated-desc", type: ISSUE, first: 100) {
         issueCount
         nodes {
           ... on Issue {
@@ -146,7 +146,7 @@ export async function fetchGitHubStats(): Promise<GitHubStats> {
           }
         }
       }
-      repositories: search(query: "label:civic-tech-issue", type: REPOSITORY, first: 100) {
+      repositories: search(query: "label:civic-tech-issue sort:updated-desc", type: REPOSITORY, first: 100) {
         repositoryCount
       }
     }
